@@ -1,0 +1,297 @@
+{
+	"info": {
+		"_postman_id": "6927fcd7-3919-4c70-adbd-269a12716293",
+		"name": "ProductService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getAdminToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Check status is success or not\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//store this token in environment variable\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"admin_access_token\", jsonData.token);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/token/getAdminToken",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"token",
+						"getAdminToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getNormalUserToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Check status is success or not\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//store this token in environment variable\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"user_access_token\", jsonData.token);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/token/getNormalUserToken?yourName=DJ&yearOfBirth=1990",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"token",
+						"getNormalUserToken"
+					],
+					"query": [
+						{
+							"key": "yourName",
+							"value": "DJ"
+						},
+						{
+							"key": "yearOfBirth",
+							"value": "1990"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addProduct",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set('random', _.random(1,1000000000))\r",
+							"pm.environment.set(\"productName\", \"p_\"+\"{{$randomFirstName}}\");\r",
+							"pm.environment.set(\"productPrice\",\"{{$randomInt}}\");\r",
+							"//pm.environment.set(\"productPrice\", _.random(1,10000));\r",
+							"//https://learning.postman.com/docs/writing-scripts/script-references/variables-list/"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Check status is success or not\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"//store this token in environment variable\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"productId\", jsonData.productId);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{user_access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \n   \"price\": {{productPrice}},  \n   \"productName\": \"{{productName}}\"  \n }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/product/secure/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"secure",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateProduct",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set('random', _.random(1,1000000000))\r",
+							"pm.environment.set(\"productName\", \"p_\"+\"{{$randomFirstName}}\");\r",
+							"pm.environment.set(\"productPrice\",\"{{$randomInt}}\");\r",
+							"//pm.environment.set(\"productPrice\", _.random(1,10000));\r",
+							"//https://learning.postman.com/docs/writing-scripts/script-references/variables-list/"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Check status is success or not\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{admin_access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \n   \"price\": {{productPrice}},  \n   \"productName\": \"{{productName}}\"  \n }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/product/secure/update/{{productId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"secure",
+						"update",
+						"{{productId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteProduct",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Check status is success or not\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{admin_access_token}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/product/secure/delete/{{productId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product",
+						"secure",
+						"delete",
+						"{{productId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,28 @@
+
+
+Note: jmeter
+
+apache-jmeter-5.3.zip
+1. Download from : https://mirrors.estointernet.in/apache//jmeter/binaries/
+2. Download Plugin Manager : https://jmeter-plugins.org/wiki/PluginsManager/
+3. keep plugin manager inside ~\apache-jmeter-5.3\apache-jmeter-5.3\lib\ext
+4. Go to Option-> plugin Manager-> Available Plugins and install below plugins
+4. Download extra plugin "Custom Thread Groups", "Random CSV Data Set";
+5.
+
+
+
+TestPlan:
+  - User Defined Variables
+  - Http Request Default
+  - jp@gc Ultimate Thread Group
+
+
+command to run in cmd 1x=75, 3600= 1hr
+--------------------------------------
+jmeter -JSERVICE_HOST=localhost -Jprotocol=http -Jport=8080 -JthreadCount=10 -JloadTime=120 -JstartUpTime=30 -JtestEnv=localhost -n -t C:\Users\Dhananjay\Desktop\Kubernetes\CICD_PCF_Spring_Boot_With_JWT_Security-master\CICD_PCF_Spring_Boot_With_JWT_Security-master\jmeter_script.jmx -l .\target\TestResult.csv -e -o .\target\Results-TestResult
+
+
+postman to jmeter
+
+https://loadium.com/postman-to-jmeter-converter/

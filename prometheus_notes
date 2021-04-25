@@ -1,0 +1,21 @@
+﻿
+docker pull prom/prometheus
+
+docker run -p 9090:9090 -v C:\prometheus.yml prom/prometheus
+
+docker run -p 9090:9090 -v C:\Users\Dhananjay\Desktop\Kubernetes\CICD_PCF_Spring_Boot_With_JWT_Security-master\CICD_PCF_Spring_Boot_With_JWT_Security-master\prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
+
+
+docker pull grafana/grafana
+
+docker run -d --name grafana -p 3000:3000 grafana/grafana
+
+grafana userId/password
+admin/admin
+
+
+
+docker-compose up -d app
+docker-compose up -d prometheus
+docker-compose up -d grafana
+
