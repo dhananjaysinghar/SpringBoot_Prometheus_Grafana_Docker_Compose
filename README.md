@@ -1,4 +1,6 @@
 # Docker Compose with Prometheus, Grafana & ELK stacks
+
+~~~
 mvn clean install
 
 docker-compose up -d app
@@ -19,4 +21,4 @@ http://localhost:9090/targets
 
 Grafana
 http://localhost:3000/
-
+~~~
